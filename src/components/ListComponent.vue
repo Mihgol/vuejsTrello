@@ -1,9 +1,12 @@
 <template>
   <div class="card">
-    <h5 class="card-title">{{ list.title }}</h5>
-    <ul class="list-group">
-      <li class="list-group-item" v-for="item in list.items" :key="item.id">{{item.title}}</li>
-    </ul>
+    <div class="col">
+      <h5 class="card-title mt-1">{{ list.title }}</h5>
+      <ul class="list-group">
+        <li class="list-group-item" v-for="item in list.items" :key="item.id">{{item.title}}</li>
+      </ul>
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -22,4 +25,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+.card {
+  max-width: 18rem;
+  min-width: 18rem;
+}
 </style>

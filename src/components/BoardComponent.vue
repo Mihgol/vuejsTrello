@@ -1,12 +1,14 @@
 <template>
-  <div class="board">
-    <div class="board__lists">
+  <div class="container">
+    <div class="container">
       <ListComponent
         v-for="(list, listIndex) in lists"
         :list="list"
         :listIndex="listIndex"
         :key="list.id"
-      />
+      >
+        <CreateItemComponent @itemAdded="addItem" :listId="list.id" />
+      </ListComponent>
     </div>
   </div>
 </template>
@@ -16,11 +18,14 @@ import Vue from "vue";
 import ListComponent from "@/components/ListComponent.vue";
 import { Item, List } from "../store/Data";
 import { IAddItem } from "../store/index";
+import CreateItemComponent from "@/components/CreateItemComponent.vue";
 
 export default Vue.extend({
   name: "Board",
+  data: () => ({}),
   components: {
-    ListComponent
+    ListComponent,
+    CreateItemComponent
   },
   computed: {
     lists(): List[] {
@@ -34,6 +39,9 @@ export default Vue.extend({
     addItem({ listId, title, description }: IAddItem): void {
       this.$store.commit("addItem", { listId, title, description });
     }
+  },
+  mounted() {
+    this.addList({ title: "List one" });
   }
 });
 </script>
