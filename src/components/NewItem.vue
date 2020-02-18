@@ -34,7 +34,7 @@ import Vue from "vue";
 export default Vue.extend({
   name: "NewItem",
   props: {
-    listId: String
+    listIndex: Number
   },
   data: () => ({
     title: "",
@@ -44,7 +44,7 @@ export default Vue.extend({
     handleAddItem(): void {
       if (this.title) {
         this.$emit("itemAdded", {
-          listId: this.listId,
+          listIndex: this.listIndex,
           title: this.title,
           description: ""
         });
