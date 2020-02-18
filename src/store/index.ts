@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { Item, List } from './Data';
+import { Data } from './Data';
 
 export class Utils {
-  static listById(lists: List[], id: string): List {
-    return lists.find(list => list.id === id) as List;
+  static listById(lists: Data.List[], id: string): Data.List {
+    return lists.find(list => list.id === id) as Data.List;
   }
 }
 
@@ -14,7 +14,7 @@ Vue.use(Vuex)
 // Board > List > Item
 
 export interface IState {
-  lists: List[]
+  lists: Data.List[]
 }
 
 export interface IAddItem {
@@ -29,10 +29,10 @@ export default new Vuex.Store({
   },
   mutations: {
     addList(state: IState, { title }): void {
-      state.lists.push(new List(title));
+      state.lists.push(new Data.List(title));
     },
     addItem(state: IState, { listId, title, description }: IAddItem): void {
-      Utils.listById(state.lists, listId).items.push(new Item(title, description));
+      Utils.listById(state.lists, listId).items.push(new Data.Item(title, description));
     }
   },
   actions: {

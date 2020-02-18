@@ -32,7 +32,7 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  name: "CreateItemComponent",
+  name: "NewItem",
   props: {
     listId: String
   },
