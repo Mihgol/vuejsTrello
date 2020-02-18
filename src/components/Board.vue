@@ -1,23 +1,31 @@
 <template>
   <div class="row">
-    <List
-      class="card ml-2"
-      v-for="(list, listIndex) in lists"
-      :list="list"
-      :listIndex="listIndex"
-      :key="list.id"
-    >
-      <NewItem @itemAdded="addItem" :listId="list.id" />
-    </List>
-    <List class="card bg-dark dark ml-2">
-      <NewList class="bg-dark" @listAdded="addList" />
-    </List>
+    <Container drag-handle-selector=".handle" lock-axis="x" orientation="horizontal">
+      <Draggable class="card ml-2 col" v-for="(list, listIndex) in lists" :key="list.id">
+        <div>
+          <header class="mt-1 handle">
+            <b-icon-list-check />
+            <h5>{{ list.title }} {{ listIndex }}</h5>
+          </header>
+          <Container group-name="items" class="list-group">
+            <Draggable
+              class="list-group-item"
+              v-for="item in list.items"
+              :key="item.id"
+            >{{item.title}}</Draggable>
+          </Container>
+          <NewItem @itemAdded="addItem" :listId="list.id" />
+        </div>
+      </Draggable>
+    </Container>
+    <NewList class="bg-dark" @listAdded="addList" />
   </div>
 </template>
 
 <script lang="ts">
+// @ts-ignore
+import { Container, Draggable } from "vue-smooth-dnd";
 import Vue from "vue";
-import List from "@/components/List.vue";
 import NewList from "@/components/NewList.vue";
 import NewItem from "@/components/NewItem.vue";
 import { Data } from "../store/Data";
@@ -27,7 +35,8 @@ export default Vue.extend({
   name: "Board",
   data: () => ({}),
   components: {
-    List,
+    Container,
+    Draggable,
     NewList,
     NewItem
   },
