@@ -9,9 +9,9 @@
     <div class="edit-background" v-if="editing" @click="editing = false">
       <textarea
         @click.stop
+        @focusout="editing = false"
         @keypress.enter.prevent="editing = false"
-        :style="{top: `${y}px`, left: `${x}px`}"
-        class="quick-edit"
+        class="quick-edit nodrag"
         ref="title"
         v-model="item.title"
       ></textarea>
@@ -28,17 +28,11 @@ export default Vue.extend({
   },
   data: () => ({
     editing: false,
-    active: false,
-    x: 0,
-    y: 0
+    active: false
   }),
   methods: {
     onEdit() {
       const item = this.$refs.item;
-      const bodyRect = document.body.getBoundingClientRect();
-      const itemRect = item.getBoundingClientRect();
-      this.y = itemRect.top - bodyRect.top;
-      this.x = itemRect.left - bodyRect.left;
       this.editing = true;
       this.$nextTick(() => {
         const title = this.$refs.title;
@@ -84,22 +78,17 @@ export default Vue.extend({
     }
   }
 
-  .edit-background {
-    position: fixed;
+  .quick-edit {
+    border: none;
+    resize: none;
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    width: 256px;
+    height: 56px;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba($color: #000000, $alpha: 0.5);
-    .quick-edit {
-      resize: none;
-      display: block;
-      overflow: hidden;
-      position: fixed;
-      width: 256px;
-      height: 56px;
-      z-index: 11;
-    }
+    z-index: 11;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="mt-1 btn btn-primary btn-block" v-show="!expanded" @click="onExpand">+</button>
+    <button class="mt-1 btn btn-primary btn-block" v-show="!expanded" @click="onExpand">New list</button>
     <form class="newListForm" v-show="expanded">
       <div class="form-group">
         <small class="create text-muted" id="createItemInfo">Create new list</small>

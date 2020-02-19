@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid board">
     <div class="row">
       <Container
         @drop="listDropped"
@@ -66,9 +66,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    addList({ title }: { title: string }): void {
-      this.$store.commit("addList", { title });
-    },
     addItem({
       listIndex,
       itemIndex = null,
@@ -113,9 +110,17 @@ export default Vue.extend({
       const { itemIndex, title, description, date } = event.payload;
 
       if (event.addedIndex !== null) {
-        this.$store.commit("addItem", {
+        console.log({
           listIndex,
           itemIndex,
+          title,
+          description,
+          date
+        });
+
+        this.$store.commit("addItem", {
+          listIndex,
+          itemIndex: event.addedIndex,
           title,
           description,
           date
