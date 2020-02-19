@@ -1,34 +1,41 @@
 <template>
-  <div class="row">
-    <Container
-      drag-handle-selector=".handle"
-      lock-axis="x"
-      orientation="horizontal"
-      @drop="listDropped"
-    >
-      <Draggable class="card ml-2 col" v-for="(list, listIndex) in lists" :key="listIndex">
-        <div>
-          <header class="mt-1 handle">
-            <b-icon-list-check />
-            <h5>{{ list.title }} {{ listIndex }}</h5>
-          </header>
-          <Container
-            group-name="items"
-            class="list-group"
-            :get-child-payload="getChildPayload(listIndex)"
-            @drop="event => itemDropped(event, listIndex)"
-          >
-            <Draggable
-              class="list-group-item"
-              v-for="(item, itemIndex) in list.items"
-              :key="itemIndex"
-            >{{item.title}}</Draggable>
-          </Container>
-          <NewItem @itemAdded="addItem" :listIndex="listIndex" />
-        </div>
-      </Draggable>
-    </Container>
-    <NewList class="bg-dark" @listAdded="addList" />
+  <div class="container-fluid">
+    <div class="row">
+      <Container
+        @drop="listDropped"
+        drag-handle-selector=".handle"
+        lock-axis="x"
+        non-drag-area-selector=".nodrag"
+        orientation="horizontal"
+      >
+        <Draggable class="list-wrapper" v-for="(list, listIndex) in lists" :key="listIndex">
+          <div class="list">
+            <header class="header">
+              <b-icon-list-check class="menu handle" />
+              <textarea
+                class="name nodrag"
+                @keypress.enter.prevent
+                v-model="list.title"
+                spellcheck="false"
+              ></textarea>
+            </header>
+            <div class="items">
+              <Container
+                group-name="items"
+                :get-child-payload="getChildPayload(listIndex)"
+                @drop="event => itemDropped(event, listIndex)"
+                non-drag-area-selector=".nodrag"
+              >
+                <Draggable class="item" v-for="(item, itemIndex) in list.items" :key="itemIndex">
+                  <Item :item="item" />
+                </Draggable>
+              </Container>
+              <NewItem draggable="false" @itemAdded="addItem" :listIndex="listIndex" />
+            </div>
+          </div>
+        </Draggable>
+      </Container>
+    </div>
   </div>
 </template>
 
@@ -36,18 +43,21 @@
 // @ts-ignore
 import { Container, Draggable } from "vue-smooth-dnd";
 import Vue from "vue";
-import NewList from "@/components/NewList.vue";
+
 import NewItem from "@/components/NewItem.vue";
+import Item from "@/components/Item.vue";
 import { Data } from "../store/Data";
 import { IAddItem, IMoveItem } from "../store/index";
 
 export default Vue.extend({
   name: "Board",
-  data: () => ({}),
+  data: () => ({
+    showModal: false
+  }),
   components: {
+    Item,
     Container,
     Draggable,
-    NewList,
     NewItem
   },
   computed: {

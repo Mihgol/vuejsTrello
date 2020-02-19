@@ -1,7 +1,70 @@
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
 
-.card {
-    max-width: 18rem;
-    min-width: 18rem;
+body {
+    background-color: #2d2d2d;
+}
+
+.list-wrapper {
+    width: 272px;
+    margin: 0 4px;
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
+    &:first-child {
+        margin-left: 8px;
+    }
+
+    .list {
+        background-color: #e4e4e4;
+        display: flex;
+        flex-direction: column;
+        max-height: 100%;
+        position: relative;
+        white-space: normal;
+        .header {
+            flex: 0 0 auto;
+            padding: 10px 8px;
+            position: relative;
+            min-height: 20px;
+            padding-right: 36px;
+            .menu {
+                width: 32px;
+                height: 32px;
+                position: absolute;
+                right: 4px;
+                top: 4px;
+                z-index: 1;
+            }
+            .name {
+                margin-right: 36px;
+                width: 100%;
+                background: transparent;
+                border-radius: 3px;
+                font-weight: 600;
+                height: 28px;
+                margin: -4px 0;
+                min-height: 20px;
+                max-height: 256px;
+                box-shadow: none;
+                resize: none;
+                border: none;
+                overflow: hidden;
+                overflow-wrap: break-word;
+            }
+        }
+        .items {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            overflow-x: hidden;
+            margin: 0 4px;
+            padding: 0 4px;
+            z-index: 1;
+
+        }
+    }
+}
+
+.smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
+    display: inline-block;
 }

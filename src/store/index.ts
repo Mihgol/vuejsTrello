@@ -39,7 +39,6 @@ export default new Vuex.Store({
       } else {
         state.lists[listIndex].items.push(new Data.Item(title, description));
       }
-
     },
     moveItem(state: IState, { sourceListIndex, targetListIndex, sourceItemIndex, targetItemIndex }: IMoveItem) {
       state.lists[targetListIndex].items.splice(targetItemIndex, 0, state.lists[sourceListIndex].items.splice(sourceItemIndex, 1)[0]);
