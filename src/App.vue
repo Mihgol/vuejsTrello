@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Navbar />
     <Board />
   </div>
 </template>
@@ -7,6 +8,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Board from "@/components/Board.vue";
+import Navbar from "@/components/Navbar.vue";
 
 export default Vue.extend({
   name: "App",
@@ -14,7 +16,8 @@ export default Vue.extend({
     document.title = "Vue Trello-Like App";
   },
   components: {
-    Board
+    Board,
+    Navbar
   }
 });
 </script>
