@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand">Totally not a "todo" app</a>
     <NewList class="nodrag bg-dark list-wrapper" @listAdded="addList" />
+    <a hard="#" class="logo">Totally not a "todo" app</a>
   </nav>
 </template>
 
@@ -23,4 +23,13 @@ export default Vue.extend({
 
 
 <style lang="scss">
+.logo {
+  font-family: "Indie Flower";
+  font-size: 32px;
+  color: rgb(149, 149, 149);
+  margin-right: 1rem;
+}
+.logo:hover {
+  color: green;
+}
 </style>
