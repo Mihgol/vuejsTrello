@@ -6,16 +6,15 @@
         <b-icon-pencil @click="onEdit" />
       </div>
     </div>
-    <div class="edit-background" v-if="editing" @click="editing = false">
-      <textarea
-        @click.stop
-        @focusout="editing = false"
-        @keypress.enter.prevent="editing = false"
-        class="quick-edit nodrag"
-        ref="title"
-        v-model="item.title"
-      ></textarea>
-    </div>
+    <textarea
+      class="quick-edit nodrag"
+      v-show="editing"
+      @click.stop
+      @focusout="editing = false"
+      @keypress.enter.prevent="editing = false"
+      ref="title"
+      v-model="item.title"
+    ></textarea>
   </div>
 </template>
 
@@ -79,15 +78,22 @@ export default Vue.extend({
   }
 
   .quick-edit {
-    border: none;
+    &:focus {
+      font-weight: 600;
+      outline: none;
+    }
+    border-style: none;
+    border-color: Transparent;
+    overflow: auto;
+    box-shadow: none;
     resize: none;
     display: block;
     overflow: hidden;
     position: absolute;
     width: 256px;
     height: 56px;
-    top: 0;
-    left: 0;
+    top: 4px;
+    left: 4px;
     z-index: 11;
   }
 }

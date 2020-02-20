@@ -1,19 +1,12 @@
-# vuejstrello
+# Trello-like to do app
 
-## Project setup
-```
-npm install
-```
+[Live Demo](https://mihgol.github.io/vuejsTrello/)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Drag and drop Vue app with Vuex.
 
-### Compiles and minifies for production
+<img src="demo.gif" width="800" />
+
+### To build
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

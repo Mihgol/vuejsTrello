@@ -1,25 +1,29 @@
 <template>
   <div class="new-item">
-    <div class="expanded" v-show="expanded">
-      <textarea
-        ref="title"
-        @keypress.enter.prevent="onAdd"
-        @focusout="onAdd"
-        v-model="title"
-        class="title"
-        placeholder="Enter item's title"
-      ></textarea>
-      <div class="btn-group d-flex">
-        <button class="btn btn-success" @click="onAdd">Add</button>
-        <button class="btn btn-danger" @click="onCancel">Cancel</button>
+    <transition name="fade" mode="out-in">
+      <div class="expanded" v-show="expanded">
+        <textarea
+          ref="title"
+          @keypress.enter.prevent="onAdd"
+          @focusout="onAdd"
+          v-model="title"
+          class="title"
+          placeholder="Enter title..."
+        ></textarea>
+        <div class="btn-group d-flex">
+          <button class="btn btn-success" @click="onAdd">Add</button>
+          <button class="btn btn-danger" @click="onCancel">Cancel</button>
+        </div>
       </div>
-    </div>
-    <div class="collapsed" v-show="!expanded">
-      <a href="#" @click="onAddNewItem" class="trigger">
-        <b-icon-plus />
-        <span>Add new item</span>
-      </a>
-    </div>
+    </transition>
+    <transition name="fade" mode="in-out">
+      <div class="collapsed" v-show="!expanded">
+        <a href="#" @click="onAddNewItem" class="trigger">
+          <b-icon-plus />
+          <span>Add new item</span>
+        </a>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -62,6 +66,21 @@ export default Vue.extend({
 
 
 <style lang="scss">
+.fade-enter-active {
+  transition: 0.5s;
+}
+.fade-leave-active {
+  transition: opacity;
+}
+.fade-enter {
+  transition-delay: 0.5s;
+  opacity: 0;
+}
+.fade-leave-to {
+  transition: 0s;
+  opacity: 0;
+}
+
 .new-item {
   .expanded {
     margin: 8px 0;

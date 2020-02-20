@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { Data } from './Data';
+import VuexPersistence from 'vuex-persist'
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage
+})
 
 Vue.use(Vuex)
 
@@ -33,26 +38,28 @@ export default new Vuex.Store({
     addList(state: IState, { title }): void {
       state.lists.push(new Data.List(title));
     },
+    removeItem(state: IState, { itemIndex, listIndex }): void {
+      state.lists[listIndex].items.splice(itemIndex, 1);
+    },
     addItem(state: IState, { listIndex, itemIndex, title, description, date }: IAddItem): void {
-      if (itemIndex !== null) {
-        console.log(`added ${title} to list ${listIndex} at position ${itemIndex}`);
+      if (itemIndex !== null && itemIndex !== undefined) {
         state.lists[listIndex].items.splice(itemIndex, 0, new Data.Item(title, description, date));
       } else {
-        console.log(`added ${title} to list ${listIndex}`);
         state.lists[listIndex].items.push(new Data.Item(title, description));
       }
     },
     moveList(state: IState, { from, to }: { from: number, to: number }): void {
       state.lists.splice(to, 0, state.lists.splice(from, 1)[0]);
     },
-    removeItem(state: IState, { itemIndex, listIndex }): void {
-      console.log(`removed ${itemIndex} from list ${listIndex}`);
-      state.lists[listIndex].items.splice(itemIndex, 1);
+    removeList(state: IState, listIndex) {
+      state.lists.splice(listIndex, 1);
     }
   },
   actions: {
   },
   modules: {
-  }
+  },
+  //@ts-ignore
+  plugins: [new VuexPersistence().plugin]
 })
 
