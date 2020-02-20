@@ -1,7 +1,9 @@
 <template>
-  <nav class="navbar navbar-dark bg-dark">
+  <nav ref="navbar" class="navbar-dark shadow bg-dark navb">
     <NewList class="nodrag bg-dark list-wrapper" @listAdded="addList" />
-    <a hard="#" class="logo">Totally not a "todo" app</a>
+    <a href="https://github.com/Mihgol/vuejsTrello" class="logo">
+      <b-icon-columns-gutters />Totally not a "todo" app
+    </a>
   </nav>
 </template>
 
@@ -23,13 +25,21 @@ export default Vue.extend({
 
 
 <style lang="scss">
-.logo {
-  font-family: "Indie Flower";
-  font-size: 32px;
-  color: rgb(149, 149, 149);
-  margin-right: 1rem;
-}
-.logo:hover {
-  color: green;
+.navb {
+  padding: 0.5rem 0;
+  max-height: 52px;
+  .logo {
+    cursor: pointer;
+    margin-bottom: 0;
+    margin-left: 30px;
+    font-family: "Indie Flower";
+    font-size: 24px;
+    color: rgb(192, 192, 192);
+    margin-right: 1rem;
+  }
+  .logo:hover {
+    color: #ffffff;
+    text-decoration: none;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid board">
-    <div class="row">
+  <div class="board">
+    <div class="row mt-2">
       <Container
         @drop="listDropped"
         drag-handle-selector=".handle"
@@ -8,29 +8,32 @@
         non-drag-area-selector=".nodrag"
         orientation="horizontal"
       >
-        <Draggable class="list-wrapper" v-for="(list, listIndex) in lists" :key="listIndex">
-          <div class="list">
-            <header class="header">
-              <b-icon-list-check class="menu handle" />
-              <textarea
-                class="name nodrag"
-                @keypress.enter.prevent
-                v-model="list.title"
-                spellcheck="false"
-              ></textarea>
-            </header>
-            <div class="items">
-              <Container
-                group-name="items"
-                :get-child-payload="getChildPayload(listIndex)"
-                @drop="event => itemDropped(event, listIndex)"
-                non-drag-area-selector=".nodrag"
-              >
-                <Draggable class="item" v-for="(item, itemIndex) in list.items" :key="itemIndex">
-                  <Item :item="item" />
-                </Draggable>
-              </Container>
-              <NewItem draggable="false" @itemAdded="addItem" :listIndex="listIndex" />
+        <Draggable v-for="(list, listIndex) in lists" :key="listIndex">
+          <div class="list-wrapper">
+            <div class="list">
+              <header class="header">
+                <b-icon-x-square class="remove" @click="removeList(listIndex)" />
+                <b-icon-list-check class="menu handle" />
+                <textarea
+                  class="name nodrag"
+                  @keypress.enter.prevent
+                  v-model="list.title"
+                  spellcheck="false"
+                ></textarea>
+              </header>
+              <div class="items">
+                <Container
+                  group-name="items"
+                  :get-child-payload="getChildPayload(listIndex)"
+                  @drop="event => itemDropped(event, listIndex)"
+                  non-drag-area-selector=".nodrag"
+                >
+                  <Draggable class="item" v-for="(item, itemIndex) in list.items" :key="itemIndex">
+                    <Item :item="item" />
+                  </Draggable>
+                </Container>
+                <NewItem draggable="false" @itemAdded="addItem" :listIndex="listIndex" />
+              </div>
             </div>
           </div>
         </Draggable>
@@ -66,6 +69,9 @@ export default Vue.extend({
     }
   },
   methods: {
+    removeList(listIndex: number) {
+      this.$store.commit("removeList", listIndex);
+    },
     addItem({
       listIndex,
       itemIndex = null,
@@ -106,18 +112,13 @@ export default Vue.extend({
       },
       listIndex: number
     ) {
-      console.log(event);
       const { itemIndex, title, description, date } = event.payload;
 
-      if (event.addedIndex !== null) {
-        console.log({
-          listIndex,
-          itemIndex,
-          title,
-          description,
-          date
-        });
+      if (event.removedIndex !== null) {
+        this.$store.commit("removeItem", { listIndex, itemIndex });
+      }
 
+      if (event.addedIndex !== null) {
         this.$store.commit("addItem", {
           listIndex,
           itemIndex: event.addedIndex,
@@ -125,10 +126,6 @@ export default Vue.extend({
           description,
           date
         });
-      }
-
-      if (event.removedIndex !== null) {
-        this.$store.commit("removeItem", { listIndex, itemIndex });
       }
     }
   },

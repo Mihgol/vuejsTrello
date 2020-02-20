@@ -1,3 +1,9 @@
+$theme-colors: (
+  "primary": #69b83c,
+  "danger": #d6d6d6,
+  "success": #9b9b9b,
+);
+
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
 
@@ -14,13 +20,16 @@ body {
     background-color: #2d2d2d;
 }
 
-.board {
+#app {
     white-space: nowrap;
+    display: flex;
+    flex-direction: column;
 }
 
-.navbar {
-    padding: 0.5rem 0;
-  }
+.board {
+    margin-left: 16px;
+    display: inline-block;
+}
 
 .list-wrapper {
     width: 272px;
@@ -28,6 +37,7 @@ body {
     display: inline-block;
     vertical-align: top;
     white-space: nowrap;
+    
     &:first-child {
         margin-left: 8px;
     }
@@ -39,6 +49,7 @@ body {
         max-height: 100%;
         position: relative;
         white-space: normal;
+        
         .header {
             flex: 0 0 auto;
             padding: 10px 8px;
@@ -46,15 +57,27 @@ body {
             min-height: 20px;
             padding-right: 36px;
             .menu {
+                position: absolute;
+                cursor: grab;
                 width: 32px;
                 height: 32px;
-                position: absolute;
                 right: 4px;
                 top: 4px;
                 z-index: 1;
             }
+            .remove {
+                position: absolute;
+                width: 24px;
+                height: 24px;
+                right: 35px;
+               top: 7px;
+               cursor: not-allowed;
+               z-index: 11;
+               &:hover {
+                   color: $danger;
+               }
+            }
             .name {
-                margin-right: 36px;
                 width: 100%;
                 background: transparent;
                 border-radius: 3px;
@@ -62,7 +85,7 @@ body {
                 height: 28px;
                 margin: -4px 0;
                 min-height: 20px;
-                max-height: 256px;
+                max-height: 225px;
                 box-shadow: none;
                 resize: none;
                 border: none;
@@ -71,13 +94,13 @@ body {
             }
         }
         .items {
+            transition: all 1s ease;
             flex: 1 1 auto;
             overflow-y: auto;
             overflow-x: hidden;
             margin: 0 4px;
             padding: 0 4px;
             z-index: 1;
-
         }
     }
 }
