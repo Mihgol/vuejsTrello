@@ -5,22 +5,19 @@
         <textarea
           ref="title"
           @keypress.enter.prevent="onAdd"
-          @focusout="onAdd"
           v-model="title"
           class="title"
-          placeholder="Enter title..."
+          placeholder="Enter title"
         ></textarea>
-        <div class="btn-group d-flex">
-          <button class="btn btn-success" @click="onAdd">Add</button>
-          <button class="btn btn-danger" @click="onCancel">Cancel</button>
-        </div>
+        <button class="addItem" @click="onAdd">Add</button>
+        <button class="cancelItem" @click="onCancel">Cancel</button>
       </div>
     </transition>
     <transition name="fade" mode="in-out">
       <div class="collapsed" v-show="!expanded">
         <a href="#" @click="onAddNewItem" class="trigger">
-          <b-icon-plus />
-          <span>Add new item</span>
+          <span class="big">+</span>
+          Add new item
         </a>
       </div>
     </transition>
@@ -66,46 +63,59 @@ export default Vue.extend({
 
 
 <style lang="scss">
-.fade-enter-active {
-  transition: 0.5s;
+.big {
+  font-weight: bold;
 }
-.fade-leave-active {
-  transition: opacity;
-}
-.fade-enter {
-  transition-delay: 0.5s;
-  opacity: 0;
-}
-.fade-leave-to {
-  transition: 0s;
-  opacity: 0;
+
+.addItem,
+.cancelItem {
+  color: #8a8a8a;
+  letter-spacing: 2px;
+  width: 50%;
+  font-weight: 550;
+  background-color: #2c2c2c;
+  float: left;
+  border: none;
+  display: block;
+  font-size: 1rem;
+  padding: 0.7rem 1rem;
+  &:hover {
+    background: #4d4d4d;
+    color: #181818;
+    cursor: pointer;
+  }
 }
 
 .new-item {
-  .expanded {
-    margin: 8px 0;
-  }
   .expanded .title {
-    resize: none;
-    width: 100%;
-    height: 54px;
+    &:focus {
+      outline: none;
+    }
     display: block;
-    border-radius: 3px;
-    margin-bottom: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 0.25rem;
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    width: 97%;
+    box-shadow: none;
+    padding: 0.5rem;
+    border: none;
+    resize: none;
+    z-index: 0;
   }
   .collapsed .trigger {
     user-select: none;
-    border-radius: 3px;
     display: block;
-    flex: 1 0 auto;
-    padding: 4px 12px;
-    margin: 8px 0;
+    padding: 0.5rem;
+    text-align: right;
     text-decoration: none;
     color: #2d2d2d;
     &:hover {
       cursor: pointer;
-      background-color: #a7a7a7;
-      color: #ffffff;
+      background-color: #1f1f1f;
+      color: #8a8a8a;
     }
   }
 }
