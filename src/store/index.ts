@@ -53,6 +53,11 @@ export default new Vuex.Store({
     },
     removeList(state: IState, listIndex) {
       state.lists.splice(listIndex, 1);
+    },
+    sample(state: IState) {
+      if (state.lists.length < 1) {
+        state.lists.push(new Data.List("Plan for an app", [new Data.Item("Learn to code", ""), new Data.Item("Code a lot", ""), new Data.Item("Cry...", ""), new Data.Item("Don't give up", ""), new Data.Item("Kick a$$", "")]))
+      }
     }
   },
   actions: {

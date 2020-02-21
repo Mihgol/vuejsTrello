@@ -1,11 +1,12 @@
 <template>
-  <div ref="item" class="item" @mouseover="active = true" @mouseleave="active = false">
-    <span class="title">{{item.title}}</span>
-    <div v-show="active" class="edit nodrag">
-      <div class="icon-container">
-        <b-icon-pencil @click="onEdit" />
-      </div>
-    </div>
+  <div
+    :class="{item: true, active: editing}"
+    ref="item"
+    @mouseover="!editing ? active = true : active = false"
+    @mouseleave="active = false"
+  >
+    <span class="title" v-if="!editing">{{item.title}}</span>
+    <div v-show="active" @click="onEdit" class="edit nodrag">e</div>
     <textarea
       class="quick-edit nodrag"
       v-show="editing"
@@ -45,56 +46,60 @@ export default Vue.extend({
 
 
 <style lang="scss">
+.active {
+  box-shadow: 2px 2px 2px rgb(37, 37, 37);
+}
 .item {
-  background: #ffffff;
-  box-shadow: 0 1px 0 rgba($color: #5d5d5d, $alpha: 0.25);
+  background: #c7c7c7;
+  font-family: Arial, Helvetica, sans-serif;
   overflow: hidden;
-  padding: 6px 8px 2px;
+  border-right: 2px dotted #555555;
+  padding: 0.5rem 0.6rem;
+  margin: 0 0.25rem;
+  margin-bottom: 0.25rem;
   position: relative;
   z-index: 0;
   display: flex;
   cursor: pointer;
   .title {
-    user-select: none;
-    clear: both;
-    display: block;
-    margin: 0 0 4px;
+    font-size: 0.9rem;
+    color: #2d2d2d;
     width: 100%;
-    overflow: hidden;
-    text-decoration: none;
-    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    white-space: normal;
   }
   .edit {
     position: absolute;
-    width: 24px;
-    height: 24px;
-    right: 1px;
-    top: 1px;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    right: 0.25rem;
+    top: 0.25rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 550;
+    color: #3b3b3b;
     text-align: center;
-    &:hover {
-      border-radius: 3px;
-      background-color: rgba($color: #5d5d5d, $alpha: 0.25);
-    }
+    border-radius: 3px;
+    background-color: #7a7a7a;
   }
 
   .quick-edit {
     &:focus {
-      font-weight: 600;
       outline: none;
     }
-    border-style: none;
-    border-color: Transparent;
-    overflow: auto;
-    box-shadow: none;
-    resize: none;
+    background: transparent;
     display: block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    height: 10rem;
     overflow: hidden;
-    position: absolute;
-    width: 256px;
-    height: 56px;
-    top: 4px;
-    left: 4px;
-    z-index: 11;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    width: 100%;
+    box-shadow: none;
+    border: none;
+    resize: none;
   }
 }
 </style>
