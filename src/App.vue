@@ -21,7 +21,27 @@ export default Vue.extend({
   }
 });
 </script>
-
 <style lang="scss">
-@import "./styles/main.scss";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter {
+  transition-delay: 0.5s;
+  opacity: 0;
+}
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
