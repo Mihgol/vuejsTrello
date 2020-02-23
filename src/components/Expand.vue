@@ -9,10 +9,10 @@ import Vue from "vue";
 export default Vue.extend({
   name: "Expand",
   methods: {
-    afterEnter(element) {
+    afterEnter(element: any) {
       element.style.height = "auto";
     },
-    leave(element) {
+    leave(element: any) {
       const height = getComputedStyle(element).height;
 
       element.style.height = height;
@@ -20,7 +20,7 @@ export default Vue.extend({
         element.style.height = 0;
       });
     },
-    enter(element) {
+    enter(element: any) {
       const width = getComputedStyle(element).width;
 
       element.style.width = width;
